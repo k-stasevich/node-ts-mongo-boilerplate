@@ -11,6 +11,7 @@ import { logger } from './helpers/logger';
 import { getEnv, getServerPort } from './helpers/env.helper';
 import { addSwaggerRoute } from './services/swagger.service';
 import path from 'path';
+import { connectToDb } from './db/db-connect';
 
 const app = express();
 app.use(cors());
@@ -27,8 +28,15 @@ if (getEnv() !== 'production') addSwaggerRoute(app);
 
 const port = getServerPort();
 
-app.listen(port, function() {
-  const serverStartedMessage = `Server listening on port ${port}!`;
-  logger.info(`env - ${getEnv()}`);
-  logger.info(serverStartedMessage);
+const DB_URL = process.env.DB_URL as string;
+
+Promise.all([
+  //
+  connectToDb(DB_URL),
+]).then(() => {
+  app.listen(port, function() {
+    const serverStartedMessage = `Server listening on port ${port}!`;
+    logger.info(`env - ${getEnv()}`);
+    logger.info(serverStartedMessage);
+  });
 });
