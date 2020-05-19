@@ -1,11 +1,6 @@
-const dbUrlOption = process.argv.find(i => i.includes('DB_URL'));
+const dotenv = require('dotenv');
 
-let DB_URL = '';
-if (dbUrlOption) {
-  DB_URL = dbUrlOption.slice(dbUrlOption.indexOf('=') + 1);
-} else {
-  console.warn('DB_URL isnt specified!');
-}
+dotenv.config();
 
 module.exports = {
   testEnvironment: 'node',
@@ -14,6 +9,6 @@ module.exports = {
     '^.+\\.tsx?$': 'ts-jest',
   },
   globals: {
-    DB_URL,
+    DB_URL: process.env.DB_URL,
   },
 };
