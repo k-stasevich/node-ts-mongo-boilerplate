@@ -1,0 +1,24 @@
+{
+  "extends": ["plugin:@typescript-eslint/recommended"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "prettier", "import"],
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": {}
+    }
+  },
+  "rules": {
+    "import/newline-after-import": ["error", { "count": 1 }],
+    "prefer-const": 0,
+    "@typescript-eslint/camelcase": 0,
+    "@typescript-eslint/interface-name-prefix": ["error", { "prefixWithI": "always" }],
+    "@typescript-eslint/no-empty-interface": 0,
+    "@typescript-eslint/explicit-function-return-type": 0,
+    "@typescript-eslint/no-unused-vars": ["warn", { "args": "none", "ignoreRestSiblings": true }],
+    "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/no-use-before-define": 0
+  }
+}
