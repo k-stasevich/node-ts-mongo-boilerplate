@@ -2,6 +2,7 @@ import express = require('express');
 import dotenv from 'dotenv';
 import * as bodyParser from 'body-parser';
 import cors from 'cors';
+import expressSwagger from 'express-swagger-generator';
 /* eslint-disable */
 dotenv.config();
 
@@ -9,9 +10,9 @@ import { routes } from './routes';
 import { globalErrorHandlerMiddleware } from './middlewares/global-error-handler.middleware';
 import { logger } from './helpers/logger';
 import { getEnv, getServerPort } from './helpers/env.helper';
-import { addSwaggerRoute } from './services/swagger.service';
 import path from 'path';
 import { connectToDb } from './db/db-connect';
+import { swaggerOptions } from './services/swagger.service';
 
 const app = express();
 app.use(cors());
@@ -24,7 +25,7 @@ app.use('/api/static', express.static(path.join(__dirname, '/../static')));
 app.get('/', function(req, res) {
   res.send('Hello World!');
 });
-if (getEnv() !== 'production') addSwaggerRoute(app);
+if (getEnv() !== 'production') expressSwagger(app)(swaggerOptions);
 
 const port = getServerPort();
 
