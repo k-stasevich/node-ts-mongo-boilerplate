@@ -11,7 +11,7 @@ import { globalErrorHandlerMiddleware } from './middlewares/global-error-handler
 import { logger } from './helpers/logger';
 import { getEnv, getServerPort } from './helpers/env.helper';
 import path from 'path';
-import { connectToDb } from './db/db-connect';
+import { connectToDb /* , connectToDbSsh */ } from './db/db-connect';
 import { swaggerOptions } from './services/swagger.service';
 
 const app = express();
@@ -32,7 +32,13 @@ const port = getServerPort();
 const DB_URL = process.env.DB_URL as string;
 
 Promise.all([
-  //
+  /* example of connect to DB via SSH */
+  // connectToDbSsh({
+  //   host: process.env.SSH_HOSTNAME as string,
+  //   username: process.env.SSH_USERNAME as string,
+  //   privateKey: fs.readFileSync(process.env.SSH_PRIVATE_KEY_PATH as string),
+  //   passphrase: process.env.SSH_PASSPHRASE as string,
+  // }),
   connectToDb(DB_URL),
 ]).then(() => {
   app.listen(port, function() {
