@@ -8,7 +8,9 @@ import { logger } from '../helpers/logger';
 /**
  * Connect to DB through SSH
  */
-export const connectToDbSsh = async (options: tunnel.Config): Promise<void> => {
+export const connectToDbSsh = async (options: IConnectToDbSshOptions): Promise<void> => {
+  const { dbUrl } = options;
+
   return new Promise((resolve, reject) => {
     const config: tunnel.Config = {
       port: 22,
@@ -24,7 +26,7 @@ export const connectToDbSsh = async (options: tunnel.Config): Promise<void> => {
         return reject(error);
       }
 
-      mongoose.connect('mongodb://localhost:27017/crowdshipv2', {
+      mongoose.connect(dbUrl, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
       });
@@ -56,3 +58,7 @@ export const connectToDb = async (url: string) => {
 export const dbDisconnect = () => {
   return mongoose.connection.close();
 };
+
+export interface IConnectToDbSshOptions extends tunnel.Config {
+  dbUrl: string;
+}
