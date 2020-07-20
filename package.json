@@ -58,7 +58,7 @@
     "express": "^4.17.1",
     "express-swagger-generator": "^1.1.17",
     "express-validator": "^6.3.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "mongoose": "5.9.7",
     "ts-node": "8.5.4",
     "tunnel-ssh": "^4.1.4",
